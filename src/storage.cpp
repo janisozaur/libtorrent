@@ -1391,7 +1391,7 @@ namespace libtorrent
 			return piece_manager::fatal_disk_error;
 		}
 
-		std::string const old_save_path = m_save_path;
+		std::string const old_save_path = strip_trailing_slash(m_save_path);
 		m_save_path = save_path;
 
 		std::set<std::string> subdirs;

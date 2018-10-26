@@ -201,6 +201,16 @@ TORRENT_TEST(paths)
 	TEST_EQUAL(is_root_path("/"), true);
 #endif
 
+#ifdef TORRENT_WINDOWS
+	TEST_EQUAL(strip_trailing_slash("c:\\blah\\"), "c:\\blah");
+	TEST_EQUAL(strip_trailing_slash("c:\\blah"), "c:\\blah");
+	TEST_EQUAL(strip_trailing_slash("c:/blah/"), "c:/blah");
+#else
+	TEST_EQUAL(strip_trailing_slash("/blah\\"), "/blah\\");
+	TEST_EQUAL(strip_trailing_slash("/blah"), "/blah");
+	TEST_EQUAL(strip_trailing_slash("/blah/"), "/blah");
+#endif
+
 	// if has_parent_path() returns false
 	// parent_path() should return the empty string
 	TEST_EQUAL(parent_path("blah"), "");

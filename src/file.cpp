@@ -836,6 +836,18 @@ namespace libtorrent
 		return false;
 	}
 
+	std::string strip_trailing_slash(std::string const& p)
+	{
+		if (p.empty()) return p;
+		if (p[p.size()-1] == '/'
+#if defined(TORRENT_WINDOWS) || defined(TORRENT_OS2)
+			|| p[p.size()-1] == '\\'
+#endif
+			)
+			return p.substr(0, p.size() - 1);
+		return p;
+	}
+
 	bool has_parent_path(std::string const& f)
 	{
 		if (f.empty()) return false;
