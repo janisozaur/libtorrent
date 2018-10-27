@@ -116,7 +116,7 @@ void bind_error_code()
 {
     class_<boost::system::error_category, boost::noncopyable>("error_category", no_init)
         .def("name", &error_category::name)
-        .def("message", &error_category::message)
+        .def("message", static_cast<std::string (error_category::*)(int) const>(&error_category::message))
         .def(self == self)
         .def(self < self)
         .def(self != self)
@@ -124,7 +124,7 @@ void bind_error_code()
 
     class_<error_code>("error_code")
         .def(init<>())
-        .def("message", &error_code::message)
+        .def("message", static_cast<std::string (error_code::*)() const>(&error_code::message))
         .def("value", &error_code::value)
         .def("clear", &error_code::clear)
         .def("category", &error_code::category
